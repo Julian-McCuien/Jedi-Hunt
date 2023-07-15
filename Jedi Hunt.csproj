@@ -52,11 +52,24 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Label.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Laser.cs" />
+    <Compile Include="MainMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainMenu.Designer.cs">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LinkedList.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainMenu.resx">
+      <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -155,6 +168,120 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke d1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke d2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke d3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke d4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke l1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke l2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke l3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke l4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke r1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke r2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke r3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke r4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke u1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke u2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke u3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luke u4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lukelightsaber.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\r2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wars.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jediHunt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\solo-removebg-preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jediHunt1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load game.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new game.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\options.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coollogo_com-1469140.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\credits gold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lgblue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loadgamegold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\newgamegold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ngblue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\optionbsgold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coollogo_com-14691401.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\border.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xwing-removebg-preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tiefighter-removebg-preview.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

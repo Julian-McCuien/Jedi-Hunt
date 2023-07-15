@@ -1,6 +1,6 @@
 ﻿namespace Jedi_Hunt
 {
-    partial class Form1
+    partial class game
     {
         /// <summary>
         /// Required designer variable.
@@ -36,7 +36,9 @@
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
             this.timerAnimation = new System.Windows.Forms.Timer(this.components);
             this.player = new System.Windows.Forms.PictureBox();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtLightSabers
@@ -106,7 +108,7 @@
             this.player.TabIndex = 4;
             this.player.TabStop = false;
             // 
-            // Form1
+            // game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -118,12 +120,14 @@
             this.Controls.Add(this.txtHealth);
             this.Controls.Add(this.txtScore);
             this.Controls.Add(this.txtLightSabers);
-            this.Name = "Form1";
+            this.Name = "game";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Jedi Hunt";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
             ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -138,6 +142,7 @@
         private System.Windows.Forms.Timer GameTimer;
         private System.Windows.Forms.Timer timerAnimation;
         private System.Windows.Forms.PictureBox player;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }
 

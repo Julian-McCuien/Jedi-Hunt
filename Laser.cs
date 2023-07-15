@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Jedi_Hunt
 {
@@ -17,11 +18,18 @@ namespace Jedi_Hunt
         private int speed = 20;
         private PictureBox laser = new PictureBox();
         private Timer laserTimer = new Timer();
+        private bool canShoot = true;
+        private int delayMilliseconds = 500;
+        //List<Image> shootRightImages = new List<Image> { Properties.Resources._6, Properties.Resources._7 };
+        //List<Image> shootLeftImages = new List<Image> { Properties.Resources._13, Properties.Resources._14 };
+        
 
         public void makeLaser(Form form)
         {
+            SoundPlayer soundplayer = new SoundPlayer("blaster.wav");
+            soundplayer.Play();
             laser.BackColor = Color.Red;
-            laser.Size = new Size(5, 5);
+            laser.Size = new Size(75, 5);
             laser.Tag = "laser";
             laser.Left = laserLeft;
             laser.Top = laserTop;
@@ -51,7 +59,7 @@ namespace Jedi_Hunt
             {
                 laser.Top += speed;
             }
-            if (laser.Left < 10 || laser.Left > 860 || laser.Top < 10 || laser.Top < 600)
+            if (laser.Left < 10 || laser.Left > 860 || laser.Top < 10 || laser.Top > 600)
             {
                 laserTimer.Stop();
                 laserTimer.Dispose();
