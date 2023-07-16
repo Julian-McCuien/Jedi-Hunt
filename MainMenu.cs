@@ -103,5 +103,24 @@ namespace Jedi_Hunt
             gameForm.Show();
             this.Hide();
         }
+
+        private void btnoptions_Click(object sender, EventArgs e)
+        {
+            Options optionPage = new Options();
+            optionPage.ShowDialog();
+            this.Hide();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnCredits_Click(object sender, EventArgs e)
+        {
+            creditpage credits = new creditpage();
+            credits.ShowDialog();
+            this.Hide();
+        }
     }
 }

@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Media;
+using System.IO;
 
 namespace Jedi_Hunt
 {
     public partial class game : Form
     {
-        bool goLeft,goRight,goUp,goDown,gameOver;
+        bool goLeft, goRight, goUp, goDown, gameOver;
         string facing = "down";
         int playerHealth = 100;
         int speed = 10;
@@ -21,8 +22,17 @@ namespace Jedi_Hunt
         int jediSpeed = 3;
         int score;
         private int animationFrame = 0;
+        string lastCollectedItemName;
         Random randomNumber = new Random();
         List<PictureBox> jediList = new List<PictureBox>();
+
+        List<string> itemLocations = new List<string>();
+        LinkedList<Items> items_list = new LinkedList<Items>();
+        LinkedList<Items> playerItems = new LinkedList<Items>();
+        int spawnTimeLimit = 50;
+        int timeCounter = 0;
+        Random random = new Random();
+        string[] itemNames = new string[] { "boba head", "chewbacca head", "dl-44", "jabba the hutt", "r2d2", "luke skywalker", "qui-gon jinn lightsaber", "darth maul head", "princess leia", "han solo", "jango fett", "princess leia lightsaber", "lando calrissian", "mace windu lightsaber", "darth sidious", "anakin skywalker", "chewbacca", "scout trooper", "obi wan kenobi lightsaber", "darth dader", "darth vader lightsaber" };
 
 
         //player animation images
@@ -31,14 +41,14 @@ namespace Jedi_Hunt
         List<Image> leftImages = new List<Image> { Properties.Resources._8, Properties.Resources._9, Properties.Resources._10, Properties.Resources._11 };
         List<Image> rightImages = new List<Image> { Properties.Resources._1, Properties.Resources._2, Properties.Resources._3, Properties.Resources._4 };
         // shooting animation images
-        List<Image> shootRightImages = new List<Image> { Properties.Resources._6, Properties.Resources._7};
-        List<Image> shootLeftImages = new List<Image> { Properties.Resources._13, Properties.Resources._14};
+        List<Image> shootRightImages = new List<Image> { Properties.Resources._6, Properties.Resources._7 };
+        List<Image> shootLeftImages = new List<Image> { Properties.Resources._13, Properties.Resources._14 };
         // luke skywalker animation images 
         List<Image> jediUpImages = new List<Image> { Properties.Resources.luke_u1, Properties.Resources.luke_u2, Properties.Resources.luke_u3, Properties.Resources.luke_u4 };
         List<Image> jediDownImages = new List<Image> { Properties.Resources.luke_d1, Properties.Resources.luke_d2, Properties.Resources.luke_d3, Properties.Resources.luke_d4 };
         List<Image> jediLeftImages = new List<Image> { Properties.Resources.luke_l1, Properties.Resources.luke_l2, Properties.Resources.luke_l3, Properties.Resources.luke_l4 };
         List<Image> jediRightImages = new List<Image> { Properties.Resources.luke_r1, Properties.Resources.luke_r2, Properties.Resources.luke_r3, Properties.Resources.luke_r4 };
-        
+
         public game()
         {
             InitializeComponent();
@@ -52,6 +62,7 @@ namespace Jedi_Hunt
 
         private void MainTimerEvent(object sender, EventArgs e)
         {
+            
             if (playerHealth > 1)
             {
                 healthBar.Value = playerHealth;
@@ -60,11 +71,14 @@ namespace Jedi_Hunt
             {
                 gameOver = true;
                 GameTimer.Stop();
+                GameSummary gameSummary = new GameSummary(playerItems);
+                gameSummary.Show();
+                this.Hide();
             }
             txtLightSabers.Text = "Light Sabers:" + lightSabers;
             txtScore.Text = "Score:" + score;
 
-            if(goLeft == true && player.Left > 0)
+            if (goLeft == true && player.Left > 0)
             {
                 player.Left -= speed;
             }
@@ -80,8 +94,7 @@ namespace Jedi_Hunt
             {
                 player.Top += speed;
             }
-
-            foreach(Control x in this.Controls)
+            foreach (Control x in this.Controls)
             {
                 if (x is PictureBox && (string)x.Tag == "item")
                 {
@@ -89,10 +102,21 @@ namespace Jedi_Hunt
                     {
                         this.Controls.Remove(x);
                         ((PictureBox)x).Dispose();
-                        
+
+                        // Find the corresponding item in the items_list
+                        var item = items_list.FirstOrDefault(i => i.item_image == ((PictureBox)x).Image);
+                        if (item != null)
+                        {
+                            playerItems.AddLast(item);
+                            items_list.Remove(item);
+                            lastCollectedItemName = item.name;
+                            lblCollected.Text = lastCollectedItemName;
+                            lblCollected.AutoSize = true;
+                        }
                     }
                 }
             }
+
 
             foreach (Control x in this.Controls)
             {
@@ -130,6 +154,13 @@ namespace Jedi_Hunt
 
 
                 }
+                if((x is PictureBox && (string)x.Tag == "jedi"))
+                {
+                    if (player.Bounds.IntersectsWith(x.Bounds))
+                    {
+                        playerHealth -= 1;
+                    }
+                }
 
                 foreach (Control j in this.Controls)
                 {
@@ -160,6 +191,11 @@ namespace Jedi_Hunt
 
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
+            if(gameOver == true)
+            {
+                return;
+            }
+
             if (e.KeyCode == Keys.Left)
             {
                 goLeft = true;
@@ -169,39 +205,45 @@ namespace Jedi_Hunt
             }
             if (e.KeyCode == Keys.Right)
             {
-                goRight = true; 
+                goRight = true;
                 facing = "right";
                 timerAnimation.Enabled = true;
                 player.Image = rightImages[animationFrame];
             }
             if (e.KeyCode == Keys.Up)
             {
-                facing = "up"; 
+                facing = "up";
                 goUp = true;
                 timerAnimation.Enabled = true;
-                player.Image = upImages[animationFrame]; ; 
+                player.Image = upImages[animationFrame]; ;
             }
             if (e.KeyCode == Keys.Down)
             {
                 facing = "down";
                 goDown = true;
                 timerAnimation.Enabled = true;
-                player.Image = downImages[animationFrame]; 
+                player.Image = downImages[animationFrame];
             }
             if (e.KeyCode == Keys.Space)
             {
                 ShootLaser(facing);
             }
-            
+
         }
 
         private void timerAnimation_Tick_1(object sender, EventArgs e)
         {
-            // Increment the animation frame
+            if (timeCounter == spawnTimeLimit)
+            {
+                DropItem();
+                timeCounter = 0;
+            }
+
+            timeCounter++;
             animationFrame++;
-            if (animationFrame >= upImages.Count) // after 4th image cycle back to first image
+            if (animationFrame >= upImages.Count) 
                 animationFrame = 0;
-            // Update the player's image based on the direction and animation frame
+            
             switch (facing)
             {
 
@@ -231,34 +273,34 @@ namespace Jedi_Hunt
 
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
-            if (gameOver) return; // if game is over then do nothing in this event
-           
+            if (gameOver) return; 
+
             if (e.KeyCode == Keys.Left)
             {
-                
+
                 goLeft = false;
-                
+
             }
-           
+
             if (e.KeyCode == Keys.Right)
             {
-                
+
                 goRight = false;
-               
+
             }
-            
+
             if (e.KeyCode == Keys.Up)
             {
-                
+
                 goUp = false;
-                
+
             }
-           
+
             if (e.KeyCode == Keys.Down)
             {
-                
+
                 goDown = false;
-                
+
             }
             if (e.KeyCode == Keys.Space)
             {
@@ -266,11 +308,11 @@ namespace Jedi_Hunt
             }
             if (!goLeft && !goRight && !goUp && !goDown)
             {
-                // Set default image for each facing direction when no movement keys are pressed
+                
                 switch (facing)
                 {
                     case "up":
-                        
+
                         player.Image = Properties.Resources._24;
                         break;
                     case "down":
@@ -284,7 +326,7 @@ namespace Jedi_Hunt
                         break;
                     default: break;
                 }
-                timerAnimation.Enabled = false; // Stop the animation
+                timerAnimation.Enabled = false;
             }
             else
             {
@@ -294,9 +336,9 @@ namespace Jedi_Hunt
         }
         private void ShootLaser(string direction)
         {
-          if (direction == "right" || direction == "left")
-          {
-              int shootAnimationFrame = animationFrame % 2;
+            if (direction == "right" || direction == "left")
+            {
+                int shootAnimationFrame = animationFrame % 2;
 
                 if (direction == "right")
                 {
@@ -311,9 +353,9 @@ namespace Jedi_Hunt
                 shootLaser.laserLeft = player.Left + (player.Width / 2);
                 shootLaser.laserTop = player.Top + (player.Height / 2);
                 shootLaser.makeLaser(this);
-                
-          }
-           
+
+            }
+
         }
         private void SpawnJedi()
         {
@@ -331,18 +373,34 @@ namespace Jedi_Hunt
         }
         private void DropItem()
         {
-            PictureBox item = new PictureBox();
-            item.Image = Properties.Resources.r2;
-            item.BackColor = Color.Transparent;
-            item.SizeMode = PictureBoxSizeMode.AutoSize;
-            item.Left = randomNumber.Next(10, this.ClientSize.Width - item.Width);
-            item.Left = randomNumber.Next(10, this.ClientSize.Width - item.Height);
-            item.Tag = "item";
-            this.Controls.Add(item);
-            item.BringToFront();
-            player.BringToFront();
+            int i = random.Next(0, itemLocations.Count);
+            Items newItem = new Items();
+            newItem.item_image = Image.FromFile(itemLocations[i]);
+            newItem.name = itemNames[i];
+            //BackColor = Color.Transparent;
+            timeCounter = spawnTimeLimit;
+            items_list.AddLast(newItem);
+            PictureBox itemPictureBox = new PictureBox();
+            itemPictureBox.Image = newItem.item_image;
+            itemPictureBox.BackColor = Color.Transparent;
+            itemPictureBox.Width = newItem.item_image.Width / 2;
+            itemPictureBox.Height = newItem.item_image.Height / 2;
+            itemPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            itemPictureBox.Left = randomNumber.Next(0, this.ClientSize.Width - itemPictureBox.Width);
+            itemPictureBox.Top = randomNumber.Next(0, this.ClientSize.Height - itemPictureBox.Height);
+            itemPictureBox.Tag = "item";
+            this.Controls.Add(itemPictureBox);
+            itemPictureBox.BringToFront();
+            playerItems.AddLast(newItem);
+
 
         }
+
+        private void game_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         private void DropLightsaberAtLocation(int left, int top)
         {
             PictureBox lightsaber = new PictureBox();
@@ -362,13 +420,13 @@ namespace Jedi_Hunt
         {
             player.Image = Properties.Resources._14;
 
-            foreach(PictureBox i in jediList)
+            foreach (PictureBox i in jediList)
             {
                 this.Controls.Remove(i);
             }
             jediList.Clear();
 
-            for(int i = 0; i < 1; i++)
+            for (int i = 0; i < 1; i++)
             {
                 SpawnJedi();
             }
@@ -377,6 +435,7 @@ namespace Jedi_Hunt
             goDown = false;
             goLeft = false;
             goRight = false;
+            gameOver = false;
 
             playerHealth = 100;
             score = 0;
@@ -384,7 +443,10 @@ namespace Jedi_Hunt
 
             GameTimer.Start();
 
+            itemLocations = Directory.GetFiles("items", "*.png").ToList();
+
 
         }
+
     }
 }

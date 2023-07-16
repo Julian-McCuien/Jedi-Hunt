@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnExit = new System.Windows.Forms.Label();
             this.btnCredits = new System.Windows.Forms.Label();
             this.btnNewGame = new System.Windows.Forms.Label();
             this.btnLoadGame = new System.Windows.Forms.Label();
@@ -40,7 +41,6 @@
             this.lblTitle4 = new System.Windows.Forms.Label();
             this.picTieFighter = new System.Windows.Forms.PictureBox();
             this.tmrTieFighter = new System.Windows.Forms.Timer(this.components);
-            this.btnExit = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picTieFighter)).BeginInit();
             this.SuspendLayout();
@@ -58,6 +58,21 @@
             this.panel1.Size = new System.Drawing.Size(923, 84);
             this.panel1.TabIndex = 0;
             // 
+            // btnExit
+            // 
+            this.btnExit.AutoSize = true;
+            this.btnExit.BackColor = System.Drawing.Color.Transparent;
+            this.btnExit.Font = new System.Drawing.Font("Star Jedi", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExit.ForeColor = System.Drawing.Color.Aqua;
+            this.btnExit.Location = new System.Drawing.Point(801, 12);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(96, 52);
+            this.btnExit.TabIndex = 11;
+            this.btnExit.Text = "exit";
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.btnExit.MouseLeave += new System.EventHandler(this.btnExit_MouseLeave);
+            this.btnExit.MouseHover += new System.EventHandler(this.btnExit_MouseHover);
+            // 
             // btnCredits
             // 
             this.btnCredits.AutoSize = true;
@@ -69,6 +84,7 @@
             this.btnCredits.Size = new System.Drawing.Size(164, 52);
             this.btnCredits.TabIndex = 10;
             this.btnCredits.Text = "Credits";
+            this.btnCredits.Click += new System.EventHandler(this.btnCredits_Click);
             this.btnCredits.MouseLeave += new System.EventHandler(this.btnCredits_MouseLeave);
             this.btnCredits.MouseHover += new System.EventHandler(this.btnCredits_MouseHover);
             // 
@@ -112,6 +128,7 @@
             this.btnoptions.Size = new System.Drawing.Size(168, 52);
             this.btnoptions.TabIndex = 9;
             this.btnoptions.Text = "options";
+            this.btnoptions.Click += new System.EventHandler(this.btnoptions_Click);
             this.btnoptions.MouseLeave += new System.EventHandler(this.btnoptions_MouseLeave);
             this.btnoptions.MouseHover += new System.EventHandler(this.btnoptions_MouseHover);
             // 
@@ -178,20 +195,6 @@
             // 
             this.tmrTieFighter.Interval = 10;
             this.tmrTieFighter.Tick += new System.EventHandler(this.tmrTieFighter_Tick);
-            // 
-            // btnExit
-            // 
-            this.btnExit.AutoSize = true;
-            this.btnExit.BackColor = System.Drawing.Color.Transparent;
-            this.btnExit.Font = new System.Drawing.Font("Star Jedi", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExit.ForeColor = System.Drawing.Color.Aqua;
-            this.btnExit.Location = new System.Drawing.Point(801, 12);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(96, 52);
-            this.btnExit.TabIndex = 11;
-            this.btnExit.Text = "exit";
-            this.btnExit.MouseLeave += new System.EventHandler(this.btnExit_MouseLeave);
-            this.btnExit.MouseHover += new System.EventHandler(this.btnExit_MouseHover);
             // 
             // MainMenu
             // 

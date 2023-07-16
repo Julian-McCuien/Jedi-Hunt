@@ -7,61 +7,36 @@ using System.Threading.Tasks;
 
 namespace Jedi_Hunt
 {
-    internal class Node
+    public class Items
     {
-        public Image element;
-        public Node next;
-        public Node(Image val, Node n)
+        Random range = new Random();
+        public int positionX;
+        public int positionY;
+        public Image item_image;
+        public int height;
+        public int width;
+        public string name;
+        public DateTime TimePickedUp { get; set; }
+        public bool expired = false;
+        int lifeTime = 200;
+
+        public Items()
         {
-            element = val;
-            next = n;
+            item_image = Image.FromFile("items/item_01.png");
+            positionX = range.Next(10, 700);
+            positionY = range.Next(10, 500);
+            height = 50;
+            width = 50;
         }
-    }
-    class LinkedList
-    {
-        private Node head;
-        private Node tail;
-        private int size;
-
-        public int Length
+        public void CheckLifeTime()
         {
-            get { return size; }
-        }
-
-        public bool IsEmpty()
-        {
-            return size == 0;
-        }
-
-        public LinkedList()
-        {
-            head = null;
-            tail = null;
-            size = 0;
-        }
-
-        public void AddLast(Image e)
-        {
-            Node newest = new Node(e, null);
-            if (IsEmpty())
-                head = newest;
-            else
-                tail.next = newest;
-
-            tail = newest;
-            size++;
-        }
-
-        public void Display()
-        {
-            Node p = head;
-            while (p != null)
+            lifeTime--;
+            if (lifeTime < 1 ) 
             {
-                Console.Write(p.element + " --->");
-                p = p.next;
+                expired = true;
             }
-            Console.WriteLine();
         }
+
 
     }
 }

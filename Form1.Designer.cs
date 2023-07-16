@@ -37,6 +37,7 @@
             this.timerAnimation = new System.Windows.Forms.Timer(this.components);
             this.player = new System.Windows.Forms.PictureBox();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.lblCollected = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
@@ -108,6 +109,17 @@
             this.player.TabIndex = 4;
             this.player.TabStop = false;
             // 
+            // lblCollected
+            // 
+            this.lblCollected.BackColor = System.Drawing.Color.Transparent;
+            this.lblCollected.Font = new System.Drawing.Font("Star Jedi", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCollected.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.lblCollected.Location = new System.Drawing.Point(563, 613);
+            this.lblCollected.Name = "lblCollected";
+            this.lblCollected.Size = new System.Drawing.Size(349, 39);
+            this.lblCollected.TabIndex = 5;
+            this.lblCollected.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -115,6 +127,7 @@
             this.BackColor = System.Drawing.Color.Gray;
             this.BackgroundImage = global::Jedi_Hunt.Properties.Resources.starwarsgalaxies;
             this.ClientSize = new System.Drawing.Size(924, 661);
+            this.Controls.Add(this.lblCollected);
             this.Controls.Add(this.player);
             this.Controls.Add(this.healthBar);
             this.Controls.Add(this.txtHealth);
@@ -124,6 +137,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Jedi Hunt";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.game_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
             ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
@@ -143,6 +157,7 @@
         private System.Windows.Forms.Timer timerAnimation;
         private System.Windows.Forms.PictureBox player;
         private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.Label lblCollected;
     }
 }
 

@@ -20,8 +20,7 @@ namespace Jedi_Hunt
         private Timer laserTimer = new Timer();
         private bool canShoot = true;
         private int delayMilliseconds = 500;
-        //List<Image> shootRightImages = new List<Image> { Properties.Resources._6, Properties.Resources._7 };
-        //List<Image> shootLeftImages = new List<Image> { Properties.Resources._13, Properties.Resources._14 };
+
         
 
         public void makeLaser(Form form)
